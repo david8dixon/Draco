@@ -29,7 +29,7 @@ if(TARGET NDI::ndi)
     get_filename_component(NDI_ROOT_DIR "${NDI_LIBRARY}" DIRECTORY CACHE)
   endif()
 endif()
-
+  
 #--------------------------------------------------------------------------------------------------#
 # Generate config.h (only occurs when cmake is run)
 #--------------------------------------------------------------------------------------------------#
@@ -49,6 +49,11 @@ add_component_library(
    LIBRARY_NAME cdi_ndi
    SOURCES      "${sources}"
    HEADERS      "${headers}" )
+
+if(TARGET pybind11::pybind11)
+  pybind11_add_module( cdi_ndi_py python/cdi_ndi_python_bindings.cc )
+  target_link_libraries( cdi_ndi_py PRIVATE Lib_cdi_ndi )
+endif()
 
 #--------------------------------------------------------------------------------------------------#
 # Installation instructions

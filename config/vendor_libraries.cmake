@@ -17,7 +17,7 @@ macro( setupPython )
 
   message( STATUS "Looking for Python...." )
   # This module looks preferably for version 3 of Python. If not found, version 2 is searched.
-  find_package(Python QUIET REQUIRED COMPONENTS Interpreter)
+  find_package(Python QUIET REQUIRED COMPONENTS Interpreter Development)
   #  Python_Interpreter_FOUND - Was the Python executable found
   #  Python_EXECUTABLE  - path to the Python interpreter
   set_package_properties( PythonInterp PROPERTIES
@@ -36,6 +36,23 @@ macro( setupPython )
   if( Python_VERSION_MAJOR STREQUAL "3" AND Python_VERSION_MINOR VERSION_LESS "6")
     message( FATAL_ERROR "When using python3, we require version 3.6+.  Python version "
       "${Python_VERSION} was discovered, which doesn't satisfy the compatibility requirement.")
+  endif()
+
+endmacro()
+
+
+#--------------------------------------------------------------------------------------------------#
+# Helper macros for PyBind11
+#--------------------------------------------------------------------------------------------------#
+macro( setupPyBind11 )
+
+  message( STATUS "Looking for PyBind11...." )
+  # This module looks preferably for version 3 of Python. If not found, version 2 is searched.
+  find_package(pybind11 QUIET CONFIG)
+  if( pybind11_FOUND )
+    message( STATUS "Looking for PyBind11....found v${pybind11_VERSION}" )
+  else()
+    message( STATUS "Looking for PyBind11....not found" )
   endif()
 
 endmacro()
@@ -430,6 +447,7 @@ macro( SetupVendorLibrariesUnix )
   setupNDI()
   setupRandom123()
   setupPython()
+  setupPyBind11()
   setupQt()
   setupLIBQUO()
   setupCaliper()

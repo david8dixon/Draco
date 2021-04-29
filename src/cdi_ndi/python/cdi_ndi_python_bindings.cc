@@ -28,4 +28,5 @@ PYBIND11_MODULE(cdi_ndi_py, m) {
     .def("getNumTemperatures", &rtt_cdi_ndi::NDI_CP_Eloss::getNumTemperatures)
     .def("getNumDensities", &rtt_cdi_ndi::NDI_CP_Eloss::getNumDensities)
     .def("getNumEnergies", &rtt_cdi_ndi::NDI_CP_Eloss::getNumEnergies);
+    .def("getStoppingData", &rtt_cdi_ndi::NDI_CP_Eloss::get_stopping_data);
 }
